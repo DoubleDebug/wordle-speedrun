@@ -1,0 +1,61 @@
+html,
+body {
+    background: #121213;
+}
+
+.game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 600px;
+}
+
+.grid {
+    display: grid;
+    grid-template-rows: repeat(6, auto);
+    grid-template-columns: repeat(5, auto);
+}
+
+.box {
+    display: grid;
+    place-items: center;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border: 1px solid white;
+    margin: 4px;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2.4rem;
+    background: #121213;
+}
+
+.box.empty {
+    background: #3a3a3c;
+}
+
+.box.wrong {
+    background: #b59f3b;
+}
+
+.box.right {
+    background: #538d4e;
+}
+
+.animated {
+    animation: flip 0.5s ease;
+}
+
+@keyframes flip {
+    0% {
+        transform: scaleY(1);
+    }
+
+    50% {
+        transform: scaleY(0);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
