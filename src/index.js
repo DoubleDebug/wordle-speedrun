@@ -1,4 +1,5 @@
-const dictionary = ['earth', 'plane', 'crane', 'audio', 'house'];
+const dictionary = ['earth', 'plane', 'crane', 'audio', 'house',
+                    'offer', 'often'];
 const state = {
     secret: dictionary[Math.floor(Math.random() * dictionary.length)],
     grid: Array(6)
@@ -74,6 +75,26 @@ function isWordValid(word) {
     return dictionary.includes(word);
 }
 
+function numOfOccurancesInWord(word, letter) {
+    let result = 0;
+    for (let i = 0; i < word.length; i++) {
+        if (word[i] === letter) {
+            result++;
+        }
+    }
+    return result;
+}
+
+function positionOfOccurance(word, letter, position) {
+    let result = 0;
+    for (let i = 0; i <= position; i++) {
+        if (word[i] === letter) {
+            result++;
+        }
+    }
+    return result;
+}
+
 function revealWord(guess) {
     const row = state.currentRow;
     const animation_duration = 500; // ms
@@ -81,14 +102,27 @@ function revealWord(guess) {
     for (let i = 0; i < 5; i++) {
         const box = document.getElementById(`box${row}${i}`);
         const letter = box.textContent;
+        const numOfOccurancesSecret = numOfOccurancesInWord(
+            state.secret,
+            letter
+        );
+        const numOfOccurancesGuess = numOfOccurancesInWord(guess, letter);
+        const letterPosition = positionOfOccurance(guess, letter, i);
 
         setTimeout(() => {
-            if (letter === state.secret[i]) {
-                box.classList.add('right');
-            } else if (state.secret.includes(letter)) {
-                box.classList.add('wrong');
-            } else {
+            if (
+                numOfOccurancesGuess > numOfOccurancesSecret &&
+                letterPosition > numOfOccurancesSecret
+            ) {
                 box.classList.add('empty');
+            } else {
+                if (letter === state.secret[i]) {
+                    box.classList.add('right');
+                } else if (state.secret.includes(letter)) {
+                    box.classList.add('wrong');
+                } else {
+                    box.classList.add('empty');
+                }
             }
         }, ((i + 1) * animation_duration) / 2);
 
