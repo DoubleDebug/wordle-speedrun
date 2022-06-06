@@ -75,7 +75,7 @@ function isWordValid(word) {
     return dictionary.includes(word);
 }
 
-function numOfOccurancesInWord(word, letter) {
+function getNumOfOccurrencesInWord(word, letter) {
     let result = 0;
     for (let i = 0; i < word.length; i++) {
         if (word[i] === letter) {
@@ -85,7 +85,7 @@ function numOfOccurancesInWord(word, letter) {
     return result;
 }
 
-function positionOfOccurance(word, letter, position) {
+function getPositionOfOccurrence(word, letter, position) {
     let result = 0;
     for (let i = 0; i <= position; i++) {
         if (word[i] === letter) {
@@ -102,17 +102,17 @@ function revealWord(guess) {
     for (let i = 0; i < 5; i++) {
         const box = document.getElementById(`box${row}${i}`);
         const letter = box.textContent;
-        const numOfOccurancesSecret = numOfOccurancesInWord(
+        const numOfOccurrencesSecret = getNumOfOccurrencesInWord(
             state.secret,
             letter
         );
-        const numOfOccurancesGuess = numOfOccurancesInWord(guess, letter);
-        const letterPosition = positionOfOccurance(guess, letter, i);
+        const numOfOccurrencesGuess = getNumOfOccurrencesInWord(guess, letter);
+        const letterPosition = getPositionOfOccurrence(guess, letter, i);
 
         setTimeout(() => {
             if (
-                numOfOccurancesGuess > numOfOccurancesSecret &&
-                letterPosition > numOfOccurancesSecret
+                numOfOccurrencesGuess > numOfOccurrencesSecret &&
+                letterPosition > numOfOccurrencesSecret
             ) {
                 box.classList.add('empty');
             } else {
