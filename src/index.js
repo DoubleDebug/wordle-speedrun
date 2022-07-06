@@ -99,6 +99,26 @@ function getPositionOfOccurrence(word, letter, position) {
   return result;
 }
 
+function getNumOfOccurrencesInWord(word, letter) {
+    let result = 0;
+    for (let i = 0; i < word.length; i++) {
+        if (word[i] === letter) {
+            result++;
+        }
+    }
+    return result;
+}
+
+function getPositionOfOccurrence(word, letter, position) {
+    let result = 0;
+    for (let i = 0; i <= position; i++) {
+        if (word[i] === letter) {
+            result++;
+        }
+    }
+    return result;
+}
+
 function revealWord(guess) {
   const row = state.currentRow;
   const animation_duration = 500; // ms
