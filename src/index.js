@@ -4,14 +4,7 @@ import { testDictionary, realDictionary } from './dictionary.js';
 console.log('test dictionary:', testDictionary);
 
 const dictionary = realDictionary;
-const state = {
-  secret: dictionary[Math.floor(Math.random() * dictionary.length)],
-  grid: Array(6)
-    .fill()
-    .map(() => Array(5).fill('')),
-  currentRow: 0,
-  currentCol: 0,
-};
+let state = generateGameState();
 
 function drawGrid(container) {
   const grid = document.createElement('div');
@@ -24,6 +17,14 @@ function drawGrid(container) {
   }
 
   container.appendChild(grid);
+
+  // reset button
+  const resetBtn = document.createElement('button');
+  resetBtn.id = 'btn-reset';
+  resetBtn.textContent = 'Reset game';
+  resetBtn.style.display = 'none';
+  resetBtn.onclick = resetGame;
+  container.appendChild(resetBtn);
 }
 
 function updateGrid() {
@@ -143,6 +144,11 @@ function revealWord(guess) {
     } else if (isGameOver) {
       alert(`Better luck next time! The word was ${state.secret}.`);
     }
+
+    if (isWinner || isGameOver) {
+      const resetBtn = document.getElementById('btn-reset');
+      resetBtn.style.display = 'block';
+    }
   }, 3 * animation_duration);
 }
 
@@ -160,6 +166,30 @@ function removeLetter() {
   if (state.currentCol === 0) return;
   state.grid[state.currentRow][state.currentCol - 1] = '';
   state.currentCol--;
+}
+
+function generateGameState() {
+  return {
+    secret: dictionary[Math.floor(Math.random() * dictionary.length)],
+    grid: Array(6)
+      .fill()
+      .map(() => Array(5).fill('')),
+    currentRow: 0,
+    currentCol: 0,
+  };
+}
+
+function resetGame() {
+  state = generateGameState();
+  for (let i = 0; i < state.grid.length; i++) {
+    for (let j = 0; j < state.grid[i].length; j++) {
+      const box = document.getElementById(`box${i}${j}`);
+      box.classList.remove('right', 'wrong', 'empty', 'animated');
+    }
+  }
+  updateGrid();
+  const resetBtn = document.getElementById('btn-reset');
+  resetBtn.style.display = 'none';
 }
 
 function startup() {
