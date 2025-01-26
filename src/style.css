@@ -11,7 +11,7 @@ body {
 }
 
 #game {
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: start;
   margin-top: 5rem;
